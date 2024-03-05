@@ -1,0 +1,47 @@
+{
+    "run.destination.stop.already.running": "Always",
+    "editor.formatOnSave": true,
+    "backend.maxHeapSizeMb": 7168,
+    "plugins": [
+        {
+            "type": "add",
+            "pluginName": "fleet.git.frontend"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.mercury"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.toml"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.smartMode"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.markdown"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.kotlin"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.json"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.image.view"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.gradle"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.diff"
+        }
+    ]
+}

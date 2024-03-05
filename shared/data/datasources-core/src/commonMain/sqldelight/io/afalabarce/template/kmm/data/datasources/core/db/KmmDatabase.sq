@@ -1,0 +1,29 @@
+CREATE TABLE table_example
+(
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    title       TEXT NOT NULL DEFAULT '',
+    description TEXT NOT NULL DEFAULT ''
+);
+
+selectAll:
+SELECT *
+FROM table_example;
+
+insertItem:
+INSERT INTO table_example(title, description)
+VALUES (?, ?);
+
+updateItem:
+UPDATE table_example
+SET title       = ?,
+    description = ?
+WHERE id = ?;
+
+deleteById:
+DELETE
+FROM table_example
+WHERE id = ?;
+
+deleteAll:
+DELETE
+FROM table_example;
