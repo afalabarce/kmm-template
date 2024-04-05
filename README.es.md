@@ -299,7 +299,7 @@ depuración**.
 El bloque de shared es el que contiene TODA la lógica común de la app, esto es, tanto las capas de negocio como las de
 ui, teniendo en cuenta que los bloques anteriores de androidApp y iosApp, no son más que contenedores para permitir
 la ejecución de todo el código común. Así pues, en este bloque realizamos la implementación de toda la
-[]Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html), aunque con un
+[Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html), aunque con un
 enfoque un poco particular (mi propio enfoque, que, probablemente no coincidirá con el tuyo).
 
 En base al esquema anterior, podemos ver que cada capa de la Clean Architecture, se compone a su vez de diversos
