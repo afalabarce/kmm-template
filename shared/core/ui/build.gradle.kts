@@ -42,10 +42,11 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.bundles.android.core.ui)
+            implementation(libs.ktor.client.okhttp)
         }
 
         iosMain.dependencies {
-
+            implementation(libs.ktor.client.ios)
         }
     }
 }

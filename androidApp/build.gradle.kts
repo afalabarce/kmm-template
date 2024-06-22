@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.jetbrainsCompose)
 }
 
 android {
@@ -41,7 +42,10 @@ dependencies {
     implementation(projects.shared.presentation.ui)
     implementation(projects.shared.core.common)
     implementation(project.dependencies.platform(libs.compose.bom))
+    implementation(libs.compose.foundation)
     implementation(libs.compose.ui)
+    implementation(libs.compose.runtime.android)
+    implementation(libs.compose.material3)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.androidx.activityCompose)
     implementation(libs.bundles.android.core)

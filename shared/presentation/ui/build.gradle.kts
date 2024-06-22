@@ -33,9 +33,11 @@ kotlin {
 
         androidMain {
             dependencies {
-                implementation(libs.bundles.android.core.ui)
                 implementation(compose.uiTooling)
                 implementation(compose.preview)
+
+                implementation(libs.bundles.android.core.ui)
+                implementation(libs.ktor.client.okhttp)
             }
         }
 
@@ -46,8 +48,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.bundles.layer.core.ui)
             implementation(compose.components.resources)
-
-            implementation(libs.bundles.layer.core.ui)
+            
             implementation(projects.shared.core.ui)
             implementation(projects.shared.core.common)
             implementation(projects.shared.core.di)
@@ -64,7 +65,7 @@ kotlin {
         }
 
         iosMain.dependencies {
-
+            implementation(libs.ktor.client.ios)
         }
 
         iosTest.dependencies {
