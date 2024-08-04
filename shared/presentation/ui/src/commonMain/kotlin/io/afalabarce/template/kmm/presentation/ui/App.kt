@@ -29,7 +29,7 @@ fun App() {
             ) {
                 val platform = getPlatform()
                 val appName = stringResource(Res.string.app_name)
-                Text("$appName ${platform.platformData.toString()}")
+                Text("$appName ${platform.platformData}")
             }
         }
     }

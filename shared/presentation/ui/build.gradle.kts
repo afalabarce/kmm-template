@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.buildConfig)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.com.google.ksp)
 }
 
@@ -48,7 +49,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.bundles.layer.core.ui)
             implementation(compose.components.resources)
-            
+
             implementation(projects.shared.core.ui)
             implementation(projects.shared.core.common)
             implementation(projects.shared.core.di)
@@ -60,12 +61,8 @@ kotlin {
             implementation(libs.kotlin.test)
         }
 
-        androidNativeTest.dependencies {
-
-        }
-
         iosMain.dependencies {
-            implementation(libs.ktor.client.ios)
+
         }
 
         iosTest.dependencies {
@@ -94,9 +91,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
 
     dependencies {

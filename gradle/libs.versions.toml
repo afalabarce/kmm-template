@@ -1,6 +1,6 @@
 [versions]
 agp = "8.3.0"
-kotlin = "1.9.23"
+kotlin = "2.0.0"
 androidx-activityCompose = "1.8.2"
 androidx-appcompat = "1.6.1"
 androidx-constraintlayout = "2.1.4"
@@ -22,13 +22,12 @@ composeImageLoader = "1.7.1"
 napier = "2.6.1"
 buildConfig = "4.1.1"
 kotlinx-coroutines = "1.7.3"
-moko-mvvm = "0.16.1"
 composeIcons = "1.1.0"
 kotlinx-datetime = "0.4.1"
 multiplatformSettings = "1.1.1"
 koin = "3.5.0"
 sqlDelight = "2.0.0"
-ksp-version = "1.9.23-1.0.19"
+ksp-version = "2.0.0-1.0.23"
 ktorVersion = "2.3.11"
 ktorfit-version = "1.11.0"
 koin-compose-version = "1.1.0"
@@ -36,9 +35,11 @@ datastore-version = "1.1.0-alpha07"
 constraint-layout-version = "0.3.0-alpha01"
 kotlinx-serialization = "1.6.3"
 coil-version = "3.0.0-alpha06"
+lifecycle-viewmodel = "2.8.0"
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycle-viewmodel" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -77,7 +78,6 @@ ktor-serialization-gson = { module = "io.ktor:ktor-serialization-gson", version.
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
 ktorfit-ksp = { module = "de.jensklingenberg.ktorfit:ktorfit-ksp", version.ref = "ktorfit-version" }
 ktorfit-lib = { module = "de.jensklingenberg.ktorfit:ktorfit-lib", version.ref = "ktorfit-version" }
-moko-mvvm = { module = "dev.icerock.moko:mvvm-compose", version.ref = "moko-mvvm" }
 multiplatformSettings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 sqlDelight-driver-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
@@ -110,9 +110,9 @@ layer-core-common = [
 ]
 
 layer-core-viewmodels = [
+    "androidx-lifecycle-viewmodel",
     "napier",
     "kotlinx-coroutines-core",
-    "moko-mvvm",
     "kotlinx-serialization-json",
     "kotlinx-datetime",
     "multiplatformSettings",
@@ -194,6 +194,7 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }

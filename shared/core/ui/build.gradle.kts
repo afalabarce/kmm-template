@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.buildConfig)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.com.google.ksp)
 }
 kotlin {
@@ -42,11 +43,10 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.bundles.android.core.ui)
-            implementation(libs.ktor.client.okhttp)
         }
 
         iosMain.dependencies {
-            implementation(libs.ktor.client.ios)
+
         }
     }
 }
@@ -68,9 +68,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
 }
 
