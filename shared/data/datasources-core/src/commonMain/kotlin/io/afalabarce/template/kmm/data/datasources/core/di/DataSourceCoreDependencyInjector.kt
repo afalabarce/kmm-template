@@ -6,6 +6,7 @@ import io.afalabarce.template.kmm.data.datasources.core.features.preferences.App
 import io.afalabarce.template.kmm.data.datasources.core.remote.ApiService
 import io.afalabarce.template.kmm.data.datasources.features.preferences.AppPreferences
 import de.jensklingenberg.ktorfit.Ktorfit
+import io.afalabarce.template.kmm.data.datasources.core.remote.createApiService
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
@@ -22,7 +23,7 @@ object DataSourceCoreDependencyInjector : KoinModuleLoader {
                             .Builder()
                             .baseUrl(ApiService.API_URL)
                             .build()
-                            .create()
+                            .createApiService()
                     }
                     singleOf(::Database)
                     single<AppPreferences> { AppPreferencesImpl(get()) }

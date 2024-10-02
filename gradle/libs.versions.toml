@@ -1,41 +1,39 @@
 [versions]
 agp = "8.3.0"
-kotlin = "2.0.0"
-androidx-activityCompose = "1.8.2"
-androidx-appcompat = "1.6.1"
+kotlin = "2.0.20"
+androidx-activityCompose = "1.9.2"
+androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.1.4"
-androidx-core-ktx = "1.12.0"
-androidx-espresso-core = "3.5.1"
-androidx-material = "1.11.0"
-androidx-test-junit = "1.1.5"
-compose = "1.6.2"
+androidx-core-ktx = "1.13.1"
+androidx-espresso-core = "3.6.1"
+androidx-material = "1.12.0"
+androidx-test-junit = "1.2.1"
+compose = "1.7.2"
 compose-plugin = "1.6.11"
 compose-tooling-preview = "1.6.11"
 junit = "4.13.2"
-jetpack-compose-bom = "2024.02.00"
-compose-material3 = "1.2.0"
-compose-compiler = "1.5.14"
-com-google-code-gson = "2.9.1"
-compose-uitooling = "1.5.4"
-voyager = "1.0.0-rc10"
-composeImageLoader = "1.7.1"
-napier = "2.6.1"
-buildConfig = "4.1.1"
-kotlinx-coroutines = "1.7.3"
-composeIcons = "1.1.0"
-kotlinx-datetime = "0.4.1"
+jetpack-compose-bom = "2024.09.02"
+compose-material3 = "1.3.0"
+com-google-code-gson = "2.10.1"
+voyager = "1.1.0-beta02"
+composeImageLoader = "1.8.3"
+napier = "2.7.1"
+buildConfig = "5.4.0"
+kotlinx-coroutines = "1.9.0"
+composeIcons = "1.1.1"
+kotlinx-datetime = "0.6.0"
 multiplatformSettings = "1.1.1"
-koin = "3.5.0"
-sqlDelight = "2.0.0"
-ksp-version = "2.0.0-1.0.23"
-ktorVersion = "2.3.11"
-ktorfit-version = "1.11.0"
-koin-compose-version = "1.1.0"
-datastore-version = "1.1.0-alpha07"
-constraint-layout-version = "0.3.0-alpha01"
-kotlinx-serialization = "1.6.3"
-coil-version = "3.0.0-alpha06"
-lifecycle-viewmodel = "2.8.0"
+koin = "4.0.0"
+sqlDelight = "2.0.2"
+ksp-version = "2.0.20-1.0.25"
+ktorVersion = "2.3.12"
+ktorfit-version = "2.1.0"
+koin-compose-version = "4.0.0"
+datastore-version = "1.1.1"
+constraint-layout-version = "0.4.0"
+kotlinx-serialization = "1.7.1"
+coil-version = "3.0.0-alpha08"
+lifecycle-viewmodel = "2.8.2"
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
@@ -76,8 +74,10 @@ ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "kto
 ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktorVersion" }
 ktor-serialization-gson = { module = "io.ktor:ktor-serialization-gson", version.ref = "ktorVersion" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
-ktorfit-ksp = { module = "de.jensklingenberg.ktorfit:ktorfit-ksp", version.ref = "ktorfit-version" }
 ktorfit-lib = { module = "de.jensklingenberg.ktorfit:ktorfit-lib", version.ref = "ktorfit-version" }
+ktorfit-converters-response = { module = "de.jensklingenberg.ktorfit:ktorfit-converters-response", version.ref = "ktorfit-version" }
+ktorfit-converters-calls = { module = "de.jensklingenberg.ktorfit:ktorfit-converters-call", version.ref = "ktorfit-version" }
+ktorfit-converters-flow = { module = "de.jensklingenberg.ktorfit:ktorfit-converters-flow", version.ref = "ktorfit-version" }
 multiplatformSettings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 sqlDelight-driver-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
@@ -153,6 +153,9 @@ layer-data-datasources-core = [
     "ktor-client-serialization",
     "ktor-serialization-kotlinx-json",
     "ktorfit-lib",
+    "ktorfit-converters-response",
+    "ktorfit-converters-calls",
+    "ktorfit-converters-flow",
     "jetpack-datastore",
     "sqlDelight-driver-coroutines-extensions",
     "com-google-code-gson",
