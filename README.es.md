@@ -446,7 +446,7 @@ object DataSourceCoreDependencyInjector : KoinModuleLoader {
                             .Builder()
                             .baseUrl(ApiService.API_URL)
                             .build()
-                            .create()
+                            .createApiService()
                     }
                     singleOf(::Database)
                     single<AppPreferences> { AppPreferencesImpl(get()) }
@@ -658,7 +658,7 @@ object DataSourceCoreDependencyInjector : KoinModuleLoader {
                             .Builder()
                             .baseUrl(ApiService.API_URL)
                             .build()
-                            .create()
+                            .createApiService()
                     }
                     singleOf(::Database)
                     single<AppPreferences> { AppPreferencesImpl(get()) }
@@ -1022,7 +1022,7 @@ esos cambios.
 Unas de las pocas diferencias que tenemos en el desarrollo en KMP con Compose Multiplatform con respecto al desarrollo
 de apps Android son las siguientes:
 
-- No disponemos de ConstraintLayout (aún, 05/03/2024) de forma oficial, en cambio, se agrega la dependencia para una
+- No disponemos de ConstraintLayout (aún, 02/10/2024) de forma oficial, en cambio, se agrega la dependencia para una
   implementación experimental de [Samuel Gagarin](https://github.com/Lavmee/constraintlayout-compose-multiplatform) que
   nos provee de ConstraintLayout.
 - Puesto que no tenemos ViewModels como tal, y nuestra implementación de viewmodels es a partir del desarrollo

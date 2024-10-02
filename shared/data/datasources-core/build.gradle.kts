@@ -1,3 +1,5 @@
+import de.jensklingenberg.ktorfit.gradle.ErrorCheckingMode
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
@@ -26,14 +28,6 @@ kotlin {
             baseName = "DataDatasourcesCore"
             isStatic = true
         }
-    }
-
-    dependencies {
-        add("kspCommonMainMetadata", libs.ktorfit.ksp)
-        add("kspAndroid", libs.ktorfit.ksp)
-        add("kspIosArm64", libs.ktorfit.ksp)
-        add("kspIosX64", libs.ktorfit.ksp)
-        add("kspIosSimulatorArm64", libs.ktorfit.ksp)
     }
 
     sourceSets {
@@ -81,6 +75,11 @@ android {
 buildConfig {
 // BuildConfig configuration here.
 // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
+}
+
+ktorfit {
+    errorCheckingMode = ErrorCheckingMode.ERROR
+    generateQualifiedTypeName = true
 }
 
 sqldelight {
