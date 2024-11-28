@@ -1,51 +1,57 @@
 [versions]
-agp = "8.3.0"
-kotlin = "2.0.20"
-androidx-activityCompose = "1.9.2"
+agp = "8.3.2"
+kotlin = "2.0.21"
+androidx-activityCompose = "1.9.3"
 androidx-appcompat = "1.7.0"
-androidx-constraintlayout = "2.1.4"
-androidx-core-ktx = "1.13.1"
+androidx-core-ktx = "1.15.0"
 androidx-espresso-core = "3.6.1"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
-compose = "1.7.2"
-compose-plugin = "1.6.11"
-compose-tooling-preview = "1.6.11"
+compose = "1.7.5"
+compose-plugin = "1.7.0"
+compose-tooling-preview = "1.7.0"
 junit = "4.13.2"
-jetpack-compose-bom = "2024.09.02"
-compose-material3 = "1.3.0"
+jetpack-compose-bom = "2024.11.00"
+compose-material3 = "1.3.1"
 com-google-code-gson = "2.10.1"
-voyager = "1.1.0-beta02"
-composeImageLoader = "1.8.3"
-napier = "2.7.1"
-buildConfig = "5.4.0"
+voyager = "1.0.0-rc10"
+composeImageLoader = "1.7.1"
+napier = "2.6.1"
+buildConfig = "4.1.1"
 kotlinx-coroutines = "1.9.0"
-composeIcons = "1.1.1"
-kotlinx-datetime = "0.6.0"
+composeIcons = "1.1.0"
+kotlinx-datetime = "0.6.1"
 multiplatformSettings = "1.1.1"
 koin = "4.0.0"
-sqlDelight = "2.0.2"
-ksp-version = "2.0.20-1.0.25"
-ktorVersion = "2.3.12"
-ktorfit-version = "2.1.0"
+sqlDelight = "2.0.0"
+ksp-version = "2.0.21-1.0.28"
+ktorVersion = "3.0.0"
+ktorfit-version = "2.2.0"
+ktorfit-converter-version = "1.11.0"
 koin-compose-version = "4.0.0"
 datastore-version = "1.1.1"
 constraint-layout-version = "0.4.0"
-kotlinx-serialization = "1.7.1"
-coil-version = "3.0.0-alpha08"
-lifecycle-viewmodel = "2.8.2"
+kotlinx-serialization = "1.7.3"
+coil-version = "3.0.0-alpha06"
+lifecycle-viewmodel = "2.8.3"
+touchlab-version = "2.0.5"
+compottie = "2.0.0-rc02"
 
 [libraries]
+compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
+compottie-dot = { module = "io.github.alexzhirkevich:compottie-dot", version.ref = "compottie" }
+compottie-network = { module = "io.github.alexzhirkevich:compottie-network", version.ref = "compottie" }
+compottie-resources = { module = "io.github.alexzhirkevich:compottie-resources", version.ref = "compottie" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycle-viewmodel" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 com-google-code-gson = { module = "com.google.code.gson:gson", version.ref = "com-google-code-gson" }
 com-google-ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp-version" }
 compose-ui = { module = "androidx.compose.ui:ui" }
+touchlab-dep = { module = "co.touchlab:stately-common", version.ref = "touchlab-version" }
 compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose-tooling-preview" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "jetpack-compose-bom" }
@@ -58,6 +64,8 @@ composeImageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref =
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin-compose-version" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-core-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+koin-navigation = { module = "io.insert-koin:koin-compose-viewmodel-navigation", version.ref = "koin" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
@@ -69,15 +77,15 @@ ktor-client-core-jvm = { module = "io.ktor:ktor-client-core-jvm", version.ref = 
 ktor-client-curl = { module = "io.ktor:ktor-client-curl", version.ref = "ktorVersion" }
 ktor-client-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktorVersion" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorVersion" }
+ktorfit-converter-flow = { module = "de.jensklingenberg.ktorfit:ktorfit-converters-flow", version.ref = "ktorfit-converter-version"}
+ktorfit-converter-call = { module = "de.jensklingenberg.ktorfit:ktorfit-converters-call", version.ref = "ktorfit-converter-version"}
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktorVersion" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktorVersion" }
 ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktorVersion" }
 ktor-serialization-gson = { module = "io.ktor:ktor-serialization-gson", version.ref = "ktorVersion" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
+ktorfit-ksp = { module = "de.jensklingenberg.ktorfit:ktorfit-ksp", version.ref = "ktorfit-version" }
 ktorfit-lib = { module = "de.jensklingenberg.ktorfit:ktorfit-lib", version.ref = "ktorfit-version" }
-ktorfit-converters-response = { module = "de.jensklingenberg.ktorfit:ktorfit-converters-response", version.ref = "ktorfit-version" }
-ktorfit-converters-calls = { module = "de.jensklingenberg.ktorfit:ktorfit-converters-call", version.ref = "ktorfit-version" }
-ktorfit-converters-flow = { module = "de.jensklingenberg.ktorfit:ktorfit-converters-flow", version.ref = "ktorfit-version" }
 multiplatformSettings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 sqlDelight-driver-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
@@ -96,6 +104,9 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil-version" }
 coil-network = { group = "io.coil-kt.coil3", name = "coil-network-ktor", version.ref = "coil-version" }
 
+touchlab-stately-isolate = { module = "co.touchlab:stately-isolate", version.ref = "touchlab-version" }
+touchlab-stately-iso-collections = { module = "co.touchlab:stately-iso-collections", version.ref = "touchlab-version" }
+
 [bundles]
 
 layer-core-common = [
@@ -107,6 +118,7 @@ layer-core-common = [
     "koin-core",
     "com-google-code-gson",
     "kotlin-stdlib",
+    "touchlab-dep",
 ]
 
 layer-core-viewmodels = [
@@ -119,6 +131,8 @@ layer-core-viewmodels = [
     "koin-core",
     "com-google-code-gson",
     "kotlin-stdlib",
+    "koin-compose",
+    "koin-viewmodel",
 ]
 
 layer-core-ui = [
@@ -132,12 +146,18 @@ layer-core-ui = [
     "multiplatformSettings",
     "koin-core",
     "koin-compose",
+    "koin-navigation",
+    "koin-viewmodel",
     "constraint-layout",
     "com-google-code-gson",
     "kotlin-stdlib",
     "coil-compose",
     "coil-network",
     "ktor-client-core",
+    "compottie",
+    "compottie-dot",
+    "compottie-network",
+    "compottie-resources",
 ]
 
 layer-data-datasources-core = [
@@ -151,11 +171,10 @@ layer-data-datasources-core = [
     "ktor-client-content-negotiation",
     "ktor-client-logging",
     "ktor-client-serialization",
+    "ktorfit-converter-call",
+    "ktorfit-converter-flow",
     "ktor-serialization-kotlinx-json",
     "ktorfit-lib",
-    "ktorfit-converters-response",
-    "ktorfit-converters-calls",
-    "ktorfit-converters-flow",
     "jetpack-datastore",
     "sqlDelight-driver-coroutines-extensions",
     "com-google-code-gson",
@@ -166,8 +185,13 @@ android-core = [
     "kotlinx-coroutines-android",
     "koin-core-android",
     "kotlin-stdlib",
+    "androidx-core-ktx",
 ]
 
+ios-core = [
+    "touchlab-stately-iso-collections",
+    "touchlab-stately-isolate"
+]
 android-core-ui = [
     "androidx-appcompat",
     "androidx-activityCompose",
@@ -176,6 +200,7 @@ android-core-ui = [
     "koin-core-android",
     "com-google-code-gson",
     "kotlin-stdlib",
+    "androidx-material",
 ]
 
 android-data-core = [
