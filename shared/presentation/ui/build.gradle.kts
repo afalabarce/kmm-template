@@ -39,6 +39,7 @@ kotlin {
 
                 implementation(libs.bundles.android.core.ui)
                 implementation(libs.ktor.client.okhttp)
+                implementation(libs.ktor.client.okhttp.android)
             }
         }
 
@@ -62,7 +63,7 @@ kotlin {
         }
 
         iosMain.dependencies {
-
+            implementation(libs.ktor.client.okhttp.ios)
         }
 
         iosTest.dependencies {

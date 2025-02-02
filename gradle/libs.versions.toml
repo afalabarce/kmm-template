@@ -32,7 +32,7 @@ koin-compose-version = "4.0.0"
 datastore-version = "1.1.1"
 constraint-layout-version = "0.4.0"
 kotlinx-serialization = "1.7.3"
-coil-version = "3.0.0-alpha06"
+coil-version = "3.0.4"
 lifecycle-viewmodel = "2.8.3"
 touchlab-version = "2.0.5"
 compottie = "2.0.0-rc02"
@@ -81,6 +81,8 @@ ktorfit-converter-flow = { module = "de.jensklingenberg.ktorfit:ktorfit-converte
 ktorfit-converter-call = { module = "de.jensklingenberg.ktorfit:ktorfit-converters-call", version.ref = "ktorfit-converter-version"}
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktorVersion" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktorVersion" }
+ktor-client-okhttp-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorVersion" }
+ktor-client-okhttp-ios = { module = "io.ktor:ktor-client-darwin", version.ref = "ktorVersion" }
 ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktorVersion" }
 ktor-serialization-gson = { module = "io.ktor:ktor-serialization-gson", version.ref = "ktorVersion" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
@@ -102,8 +104,8 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-junit" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil-version" }
-coil-network = { group = "io.coil-kt.coil3", name = "coil-network-ktor", version.ref = "coil-version" }
-
+coil-network = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil-version" }
+coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil-version" }
 touchlab-stately-isolate = { module = "co.touchlab:stately-isolate", version.ref = "touchlab-version" }
 touchlab-stately-iso-collections = { module = "co.touchlab:stately-iso-collections", version.ref = "touchlab-version" }
 
@@ -153,6 +155,7 @@ layer-core-ui = [
     "kotlin-stdlib",
     "coil-compose",
     "coil-network",
+    "coil-compose-core",
     "ktor-client-core",
     "compottie",
     "compottie-dot",
