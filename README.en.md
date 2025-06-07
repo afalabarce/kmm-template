@@ -1034,9 +1034,6 @@ of Android apps are the following:
 - We do not have ConstraintLayout (yet, 02/10/2024) officially, instead, the dependency for a
   experimental implementation by [Samuel Gagarin](https://github.com/Lavmee/constraintlayout-compose-multiplatform) that
   provides us with ConstraintLayout.
-- Since we do not have ViewModels as such, and our implementation of viewmodels is from development
-  from [MokoMVVM](https://github.com/icerockdev/moko-mvvm), to inject the viewmodels into our composables,
-  We will use koinInject and not koinViewModel, just as we did in Android.
 - Resources, since version 1.6.0 of compose multiplatform resources have been added to the system, so it is
   unnecessary to use alternatives such as moko-resources or free ones. For more information you can visit the
   [Project website](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html) (it is at
