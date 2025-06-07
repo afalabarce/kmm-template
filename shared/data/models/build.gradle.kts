@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.buildConfig)
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.com.google.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -30,6 +31,8 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.shared.core.common)
             implementation(libs.bundles.layer.core.common)
+            implementation(libs.room.runtime)
+            implementation(libs.sqlite.bundled)
         }
 
         commonTest.dependencies {
@@ -45,6 +48,16 @@ kotlin {
     }
 }
 
+dependencies {
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+
+    configurations.all {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+}
 
 android {
     namespace = "${BuildVersion.environment.applicationId}.data.models"
@@ -61,6 +74,10 @@ android {
         sourceCompatibility = BuildVersion.environment.javaVersion
         targetCompatibility = BuildVersion.environment.javaVersion
     }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 buildConfig {

@@ -1,7 +1,9 @@
 package io.afalabarce.template.kmm.data.repository.di
 
 import io.afalabarce.template.kmm.core.common.di.KoinModuleLoader
+import io.afalabarce.template.kmm.data.repository.features.example.EntityRepositoryImpl
 import io.afalabarce.template.kmm.data.repository.features.preferences.PreferencesRepositoryImpl
+import io.afalabarce.template.kmm.domain.repository.features.example.EntityRepository
 import io.afalabarce.template.kmm.domain.repository.features.preferences.PreferencesRepository
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
@@ -13,6 +15,7 @@ object DataRepositoryDependencyInjector : KoinModuleLoader {
         get() = listOf(
             module {
                 factoryOf(::PreferencesRepositoryImpl) bind PreferencesRepository::class
+                factoryOf(:: EntityRepositoryImpl) bind EntityRepository::class
             }
         )
 }

@@ -6,6 +6,6 @@ import org.koin.dsl.module
 
 actual fun getPlatformDependencyInjects(): List<Module> = listOf(
     module {
-        factory { androidContext() }
+
     }
 )

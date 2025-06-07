@@ -5,9 +5,9 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.buildConfig)
     alias(libs.plugins.kotlinxSerialization)
-    alias(libs.plugins.sqlDelight)
     alias(libs.plugins.com.google.ksp)
     alias(libs.plugins.ktorfit)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -54,6 +54,16 @@ kotlin {
     }
 }
 
+dependencies {
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+
+    configurations.all {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+}
 
 android {
     namespace = "${BuildVersion.environment.applicationId}.data.datasources.core"
@@ -82,14 +92,8 @@ ktorfit {
     generateQualifiedTypeName = true
 }
 
-sqldelight {
-    databases {
-        create(BuildVersion.environment.appDatabaseName) {
-            // Database configuration here.
-            // https://cashapp.github.io/sqldelight
-            packageName.set("${BuildVersion.environment.applicationId}.data.datasources.core.db")
-        }
-    }
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 tasks.register("testClasses") {
