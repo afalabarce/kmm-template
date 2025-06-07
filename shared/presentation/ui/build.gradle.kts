@@ -25,6 +25,7 @@ kotlin {
         it.binaries.framework {
             baseName = "PresentationUi"
             isStatic = true
+            binaryOption("bundleId", baseName)
 
         }
     }

@@ -13,6 +13,6 @@ object BuildVersion {
 
     object android {
         const val minSdk = 24
-        const val compileSdk = 34
+        const val compileSdk = 36
     }
 }
