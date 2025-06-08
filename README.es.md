@@ -77,13 +77,13 @@ estas funciones y/o clases se definen en el módulo
 [commonMain], pero se implementan en cada plataforma, marcando su implementación con la palabra reservada **actual**. A
 tener en cuenta que, para realizar la implementación, se requiere
 de una nomenclatura particular, por ejemplo, si en [commonMain] tenemos el fichero (definido por su
-package) [dev.afalabarce.template.kmm.data.datasources.core.db.DriverFactory.kt]
-en el resto de plataformas, deberemos definir un fichero que será en el que realizaremos la implementación de la clase (
+package) [io.afalabarce.template.kmm.data.datasources.core.di.DataSourceCoreDependencyInjector.kt]
+en el resto de plataformas, deberemos definir un fichero que será en el que realizaremos la implementación del método (
 o función expect) que requiramos:
 
-- **[dev.afalabarce.template.kmm.data.datasources.core.db.DriverFactory.android.kt]**, se realiza la implementación de
+- **[io.afalabarce.template.kmm.data.datasources.core.di.DataSourceCoreDependencyInjector.android.kt]**, se realiza la implementación de
   la clase / funciones utilizando elementos propios de android.
-- **[dev.afalabarce.template.kmm.data.datasources.core.db.DriverFactory.ios.kt]**, se realiza la implementación de la
+- **[io.afalabarce.template.kmm.data.datasources.core.di.DataSourceCoreDependencyInjector.ios.kt]**, se realiza la implementación de la
   clase / funciones utilizando el puente Kotlin - Swift proporcionado por KMP.
 
 Veamos un ejemplo, precisamente con el fichero propuesto como ejemplo:
@@ -91,44 +91,67 @@ Veamos un ejemplo, precisamente con el fichero propuesto como ejemplo:
 #### Definición en commonMain
 
 ```kotlin
-expect class DriverFactory {
-    fun createDriver(): SqlDriver
-}
+expect fun getPlatformInjects(): List<Module>
 ```
 
 #### Implementación para plataforma Android
 
 ```kotlin
-actual class DriverFactory {
-    private val context: Context by inject(Context::class.java)
-    actual fun createDriver(): SqlDriver {
-        return AndroidSqliteDriver(
-            KmmDatabase.Schema,
-            this.context,
-            Database.databaseName
-        )
-    }
+fun getDatabaseBuilder(context: Context): RoomDatabase.Builder<AppDatabase> {
+    val appContext = context.applicationContext
+    val dbFile = appContext.getDatabasePath(AppDatabase.DATABASE_NAME)
+
+    return Room.databaseBuilder<AppDatabase>(
+        context = appContext,
+        name = dbFile.absolutePath,
+    )
 }
+
+
+actual fun getPlatformInjects(): List<Module> = listOf(
+    module {
+        singleOf(::getDatabaseBuilder)
+        singleOf(::dataStore)
+    }
+)
 ```
 
 #### Implementación para plataforma iOS
 
 ```kotlin
-actual class DriverFactory {
-    actual fun createDriver(): SqlDriver {
-        return NativeSqliteDriver(
-            KmmDatabase.Schema,
-            Database.databaseName
-        )
-    }
+fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
+    val dbFilePath = documentDirectory() + "/${AppDatabase.DATABASE_NAME}"
+    return Room.databaseBuilder<AppDatabase>(
+        name = dbFilePath,
+    )
 }
+
+@OptIn(ExperimentalForeignApi::class)
+private fun documentDirectory(): String {
+    val documentDirectory = NSFileManager.defaultManager.URLForDirectory(
+        directory = NSDocumentDirectory,
+        inDomain = NSUserDomainMask,
+        appropriateForURL = null,
+        create = false,
+        error = null,
+    )
+
+    return requireNotNull(documentDirectory?.path)
+}
+
+actual fun getPlatformInjects(): List<Module> = listOf(
+    module {
+        singleOf(::getDatabaseBuilder)
+        singleOf(::dataStore)
+    }
+)
 ```
 
-Como vemos en cada implementación se utiliza una clase KmmDatabase, esta clase es generada por el compilador,
-ya que es ese nombre el que hemos dado en la configuración de gradle para la base de datos basada en SqlDelight.
+Como vemos en cada implementación se utiliza un método getDatabaseBuilder, este método es el encargado de generar la lógica de creación de la base de datos Room,
+como podemos ver,se utilizan elementos específicos de cada plataforma.
 
-Como podemos ver, una vez marcamos la clase **DriverFactory** como expect, todas sus implementaciones, deben ir
-marcadas como actual, al igual que las funciones o propiedades que pueda contener.
+Como podemos apreciar, una vez marcamos el método **getPlatformInjects** como expect, todas sus implementaciones, deben ir
+marcadas como actual.
 
 ## Ejecución de la App en las distintas plataformas (Android y iOS)
 
@@ -576,20 +599,18 @@ Comencemos, a partir de los módulos más internos:
 #### Models
 
 En este módulo, definiremos las data class necesarias para la gestión correcta tanto de las entidades locales, como
-remotas. A tener en cuenta que, ya que utilizamos SqlDelight como motor de persistencia local, vamos a tener que definir
-nuestras entidades locales de un modo un poco especial (aplica el mismo formato a entidades para remote):
+remotas. A tener en cuenta que, ya que utilizamos Room como motor de persistencia local, vamos a tener que definir
+nuestras entidades locales como lo hacíamos en proyectos android puros:
 
 ```kotlin
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class ExampleEntity(
-    @SerialName("id")
+@Entity(tableName = "example_entities")
+data class CacheExampleEntity(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     val id: Long,
-    @SerialName("title")
+    @ColumnInfo(name = "title")
     val title: String,
-    @SerialName("description")
+    @ColumnInfo(name = "description")
     val description: String
 )
 ```
@@ -611,7 +632,7 @@ continuación en mayor detalle):
 
 - **Ktor + Ktorfit**, como sistema de conexión a APIs externas (REST principalmente.)
 - **Jetpack Datastore**, como sistema de almacenamiento de preferencias.
-- **SqlDelight**, como "ORM" y capa de acceso a datos.
+- **Room**, como "ORM" y capa de acceso a datos.
 
 Veamos en detalle cada uno de estos sistemas de acceso a datos:
 
@@ -723,165 +744,11 @@ Como nota final sobre DataStore, lo interesante es que ya lo tenemos todo defini
 importante, definir e implementar la interfaz y sus métodos a partir de los cuales nos vamos a apoyar para una gestión
 sencilla de preferencias.
 
-##### SqlDelight
+##### Room
 
-Esta característica es, quizá, de las más importantes, pero también la que más diferencias tiene con respecto al
-desarrollo de apps Android, ya que si bien con Room todo era bastante sencillo, con SqlDelight, si bien no es complejo,
-no es tan simple como con Room.
-
-SqlDelight nos permite abstraer en gran medida las operaciones [CRUD](https://es.wikipedia.org/wiki/CRUD), el resultado
+Room nos permite abstraer en gran medida las operaciones [CRUD](https://es.wikipedia.org/wiki/CRUD), el resultado
 final, tras compilar satisfactoriamente, es que se crean una serie de clases que nos van a permitir realizar las
-distintas operaciones ya, en código Kotlin, de forma similar a lo que conseguimos con Room.
-
-- **Inicialización del modelo de datos**
-
-Como en todo proyecto que requiera de un sistema de bases de datos local, deberemos definir un modelado inicial que será
-la base de nuestro desarrollo, para ello, requerimos de la creación de un **fichero con extensión .sq**, su nombre es
-indiferente, aunque por convención lo ideal es nombrarlo con el mismo nombre que el proyecto (por ejemplo), eso sí, en
-una ruta muy particular de la sección de código común ([commonMain]):
-
-![SqlDeLight Ruta a fichero sq](art/sqldelight_sq_file_path.png)
-
-Como vemos en la captura anterior, se crea una carpeta [sqldelight] exactamente al mismo nivel que las carpetas de
-código, creando además una **estructura de directorios idéntica a la que tenemos en código**, esto es muy importante ya
-que es la que va a determinar la correcta creación, en tiempo de compilación, de ciertos objetos y entidades que nos van
-a resultar de utilidad en el mapeo de datos.
-
-**Estructura del fichero .sq**
-
-Este fichero tiene una estructura bastante sencilla, pero con ciertas restricciones que deberemos tener en cuenta:
-
-- Es un fichero de código SQL, por lo que cada sentencia SQL que escribamos deberá finalizar con un ;
-- Las palabras reservadas SQL **deben ir en mayúsculas** de lo contrario se producirán errores de compilación.
-
-En cuanto a su estructura, al inicio del fichero definiremos todas las tablas y restricciones (constraints) que
-consideremos necesarias para nuestro modelo de datos, a continuación, y aquí está la parte más interesante, definiremos
-los métodos que vamos a utilizar en nuestras consultas, teniendo en cuenta que el **nombre del método va en una línea,
-finalizando con :** y en las siguientes líneas, la sentencia SQL que va a permitir obtener los datos. Como
-particularidad, **al definir un método, si éste debe tener parámetros, estos se indicarán en la sentencia SQL
-mediante ?**.
-
-Veamos un ejemplo práctico:
-
-```sqldelight
-CREATE TABLE table_example (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL DEFAULT '',
-    description TEXT NOT NULL DEFAULT ''
-);
-
-selectAll:
-SELECT * FROM table_example;
-
-insertItem:
-INSERT INTO table_example(title,description)
-VALUES (?, ?);
-
-updateItem:
-    UPDATE table_example SET title = ?, description = ? WHERE id = ?;
-
-deleteById:
-DELETE FROM table_example WHERE id = ?;
-
-deleteAll:
-DELETE FROM table_example;
-```
-
-En el ejemplo anterior, van a suceder varias cosas tras compilar:
-
-- Se va a crear una clase Table_example que abstrae la estructura de la tabla que hemos creado.
-- Se va a crear una clase de tipo KmmDatabase, que inyectada, nos va a proporcionar varias propiedades interesantes:
-    - Schema, nos va a proporcionar las tablas y demás elementos importantes de la base de datos.
-    - queries, de tipo [KmmTemplateQueries] (ojo al prefijo que coincide con el Nombre del fichero .sq) en el que se
-      nos proporcionan todos los métodos definidos en el fichero sq.
-
-Una vez compilado satisfactoriamente, podremos crear nuestros Dao, aunque tal cual funciona SqlDelight, nuestro Dao será
-nuestra propiedad queries de la clase KmmDatabase, así pues, tan solo nos queda crear nuestro puente de datos, veamos un
-ejemplo:
-
-```kotlin
-class Database(databaseFactory: DriverFactory) {
-    private val database = KmmDatabase(databaseFactory.createDriver())
-    private val dbQuery = database.mvvmKmmTemplateQueries
-
-    internal fun clearDatabase() {
-        dbQuery.transaction {
-            dbQuery.deleteAll()
-        }
-    }
-
-    internal fun deleteById(id: Long) {
-        dbQuery.transaction {
-            dbQuery.deleteById(id)
-        }
-    }
-
-    internal fun getAllEntities(): List<ExampleEntity> {
-        return dbQuery.selectAll(::exampleEntityMapper).executeAsList()
-    }
-
-    internal fun insertOrUpdateEntities(vararg entities: ExampleEntity) {
-        dbQuery.transaction {
-            entities.forEach { entity ->
-                if (entity.id == 0L) {
-                    dbQuery.insertItem(
-                        entity.title,
-                        entity.description
-                    )
-                } else {
-                    dbQuery.updateItem(
-                        entity.title,
-                        entity.description,
-                        entity.id
-                    )
-                }
-            }
-        }
-    }
-
-    private fun exampleEntityMapper(
-        id: Long,
-        title: String,
-        description: String
-    ): ExampleEntity = ExampleEntity(
-        id = id,
-        title = title,
-        description = description
-    )
-
-    companion object {
-        val databaseName = "KmmDatabase"
-    }
-}
-```
-
-Como podemos ver, podemos encapsular (es muy muy recomendable) todas las peticiones en un entorno transaccional, gracias
-a [dbQuery.transaction], esto es así porque en caso de realizar inserciones o borrados de objetos que tienen relación
-entre sí, si se produce un error la transacción completa se cancelaría y no quedarían datos inconsistentes en el
-sistema.
-
-También nos fijaremos en esos "mappers" privados, estos nos van a servir para mapear un objeto que es de tipo Entidad
-local a lo que el sistema requiere como vemos, pasamos referencia a la función de mapeo y automáticamente, se genera el
-resultado que necesitamos.
-
-- **Migraciones**
-
-Un aspecto importantísimo en cualquier app que tiene entre sus características el almacenamiento local de información en
-una base de datos SQL es la evolución de la misma, evolución que puede provocar nuevas necesidades y que, por tanto,
-requiera modificaciones en la estructura de la base de datos.
-
-Al igual que sucedía en Android con Room, que se requieren de ciertas modificaciones e instancias de elementos que nos
-permiten alterar la base de datos, con SqlDelight también tenemos la posibilidad de ejecutar migraciones desde una
-versión de la base de datos a otra, para ello deberemos disponer dentro de la carpeta sqldelight de una **carpeta
-llamada migrations**, dentro de la cual, será donde agreguemos cada cambio que necesitemos a la base de datos, eso sí
-deberemos tener en cuenta que, en este caso, **la extensión de los ficheros a utilizar tendrán extensión .sqm** y serán
-nombrados en función de la versión con la que vayamos a trabajar (1.sqm, 2.sqm, ...).
-
-**ATENCIÓN**: el fichero 1.sqm indica que estamos migrando desde la versión 1 a la 2, el fichero 2.sqm es el que
-gestionará el cambio de la versión 2 a la 3, y así sucesivamente.
-
-Para una información completa sobre visitar el sitio relacionado para
-las [Migraciones en SqlDeLight](https://cashapp.github.io/sqldelight/2.0.0-alpha05/multiplatform_sqlite/migrations/).
+distintas operaciones.
 
 #### Repository
 
