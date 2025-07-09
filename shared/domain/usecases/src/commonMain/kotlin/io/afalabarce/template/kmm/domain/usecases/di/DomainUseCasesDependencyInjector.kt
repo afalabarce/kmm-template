@@ -1,6 +1,7 @@
 package io.afalabarce.template.kmm.domain.usecases.di
 
 import io.afalabarce.template.kmm.core.common.di.KoinModuleLoader
+import io.afalabarce.template.kmm.domain.usecases.features.example.GetEntitiesUseCase
 import io.afalabarce.template.kmm.domain.usecases.features.preferences.GetDeviceIdUseCase
 import io.afalabarce.template.kmm.domain.usecases.features.preferences.SetDeviceIdUseCase
 import org.koin.core.module.Module
@@ -13,6 +14,7 @@ object DomainUseCasesDependencyInjector : KoinModuleLoader {
             module {
                 factoryOf(::GetDeviceIdUseCase)
                 factoryOf(::SetDeviceIdUseCase)
+                factoryOf(::GetEntitiesUseCase)
             }
         )
 }

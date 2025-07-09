@@ -116,7 +116,7 @@ class InitializerRelocator(
                 val sourceFolderParents = sourceFolder.getAllParentsRecursive()
                 val destinationFolderParents = destinationFolder.getAllParentsRecursive()
 
-                val commonParent = sourceFolderParents.filter { parent -> parent in destinationFolderParents }.first()
+                val commonParent = sourceFolderParents.first { parent -> parent in destinationFolderParents }
 
                 val parentToDelete = sourceFolder.getParentWithAncestor(commonParent)
                 parentToDelete.deleteRecursively()

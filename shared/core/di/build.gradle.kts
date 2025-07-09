@@ -30,6 +30,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.shared.core.common)
+            implementation(projects.shared.core.ui)
             implementation(projects.shared.data.datasourcesCore)
             implementation(projects.shared.data.repository)
             implementation(projects.shared.domain.usecases)

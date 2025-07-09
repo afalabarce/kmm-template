@@ -10,12 +10,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import io.afalabarce.template.kmm.core.common.platform.AndroidPlatform
 import io.afalabarce.template.kmm.presentation.ui.App
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        AndroidPlatform.androidContext = this
 
         setContent {
             val localView = LocalView.current

@@ -1,5 +1,6 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
+import de.jensklingenberg.ktorfit.gradle.ErrorCheckingMode
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -8,9 +9,9 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.buildConfig)
     alias(libs.plugins.kotlinxSerialization)
-    alias(libs.plugins.sqlDelight)
     alias(libs.plugins.com.google.ksp)
     alias(libs.plugins.ktorfit)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -30,14 +31,6 @@ kotlin {
             baseName = "DataDatasourcesCore"
             isStatic = true
         }
-    }
-
-    dependencies {
-        add("kspCommonMainMetadata", libs.ktorfit.ksp)
-        add("kspAndroid", libs.ktorfit.ksp)
-        add("kspIosArm64", libs.ktorfit.ksp)
-        add("kspIosX64", libs.ktorfit.ksp)
-        add("kspIosSimulatorArm64", libs.ktorfit.ksp)
     }
 
     sourceSets {
@@ -64,6 +57,16 @@ kotlin {
     }
 }
 
+dependencies {
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+
+    configurations.all {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+}
 
 android {
     namespace = "${BuildVersion.environment.applicationId}.data.datasources.core"
@@ -87,14 +90,13 @@ buildConfig {
 // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
 }
 
-sqldelight {
-    databases {
-        create(BuildVersion.environment.appDatabaseName) {
-            // Database configuration here.
-            // https://cashapp.github.io/sqldelight
-            packageName.set("${BuildVersion.environment.applicationId}.data.datasources.core.db")
-        }
-    }
+ktorfit {
+    errorCheckingMode = ErrorCheckingMode.ERROR
+    generateQualifiedTypeName = true
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 tasks.register("testClasses") {

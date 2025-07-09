@@ -2,9 +2,13 @@ package io.afalabarce.template.kmm.core.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.MaterialExpressiveTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.LocalMotionScheme
+import androidx.compose.material3.MotionScheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Typography
@@ -82,6 +86,7 @@ private val DarkColorScheme = darkColorScheme(
 
 val LocalThemeIsDark = compositionLocalOf { mutableStateOf(true) }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AppMaterialTheme(
     content: @Composable() () -> Unit
@@ -93,8 +98,9 @@ fun AppMaterialTheme(
     ) {
         val isDark by isDarkState
         SystemAppearance(!isDark)
-        MaterialTheme(
+        MaterialExpressiveTheme(
             colorScheme = if (isDark) DarkColorScheme else LightColorScheme,
+            motionScheme = MotionScheme.expressive(),
             typography = Typography,
             shapes = AppShapes,
             content = {
@@ -130,6 +136,9 @@ object AppMaterialTheme {
         @ReadOnlyComposable
         get() = LocalDimension.current
 
+    @ExperimentalMaterial3ExpressiveApi
+    val motionScheme: MotionScheme
+        @Composable @ReadOnlyComposable get() = LocalMotionScheme.current
 }
 
 

@@ -1,6 +1,7 @@
 package io.afalabarce.template.kmm.core.di
 
 import io.afalabarce.template.kmm.core.common.di.KoinModuleLoader
+import io.afalabarce.template.kmm.core.ui.di.CoreUiDependencyInjector
 import io.afalabarce.template.kmm.data.datasources.core.di.DataSourceCoreDependencyInjector
 import io.afalabarce.template.kmm.data.repository.di.DataRepositoryDependencyInjector
 import io.afalabarce.template.kmm.domain.usecases.di.DomainUseCasesDependencyInjector
@@ -13,6 +14,7 @@ object CoreDiDependencyInjector : KoinModuleLoader {
             DataSourceCoreDependencyInjector.modules,
             DataRepositoryDependencyInjector.modules,
             DomainUseCasesDependencyInjector.modules,
+            CoreUiDependencyInjector.modules,
             PresentationViewModelsDependencyInjector.modules,
         ).flatten()
 }
