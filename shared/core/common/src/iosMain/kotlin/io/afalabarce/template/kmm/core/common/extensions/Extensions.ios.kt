@@ -1,7 +1,9 @@
 package io.afalabarce.template.kmm.core.common.extensions
 
+
 import kotlinx.datetime.*
 import platform.Foundation.*
+import kotlin.time.ExperimentalTime
 
 actual fun Int.format(format: String): String = try {
     val formatter = NSNumberFormatter()
@@ -43,6 +45,7 @@ actual fun Float.format(format: String): String = try {
     ""
 }
 
+@ExperimentalTime
 actual fun LocalDate?.format(format: String): String = try {
     val dateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = format
@@ -51,6 +54,7 @@ actual fun LocalDate?.format(format: String): String = try {
     ""
 }
 
+@ExperimentalTime
 actual fun LocalDateTime?.format(format: String): String = try {
     val dateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = format
@@ -70,6 +74,7 @@ actual fun String?.toLocalDate(format: String): LocalDate? = try {
     null
 }
 
+@ExperimentalTime
 actual fun String?.toLocalDateTime(format: String): LocalDateTime? = try {
     NSDateFormatter().let { formatter ->
         formatter.dateFormat = format
@@ -81,4 +86,5 @@ actual fun String?.toLocalDateTime(format: String): LocalDateTime? = try {
     null
 }
 
+@ExperimentalTime
 private fun LocalDate.toInstant(): Instant = Instant.fromEpochSeconds(this.toEpochDays() * 24 * 3600L)
